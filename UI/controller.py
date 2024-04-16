@@ -8,10 +8,35 @@ class Controller:
         # the model, which implements the logic of the program and holds the data
         self._model = model
 
-    def handle_hello(self, e):
-        name = self._view.txt_name.value
-        if name is None or name == "":
-            self._view.create_alert("Inserire il nome")
-            return
-        self._view.txt_result.controls.append(ft.Text(f"Hello, {name}!"))
+    def handle_top_vendite(self, e):
+        pass
+
+    def handle_analizza_vendite(self, e):
+        pass
+
+    def populate_dd_anno(self):
+        self._view.dd_anno.options.append(ft.dropdown.Option(key="None", text="Nessun Filtro"))
+        for anno in self._model.get_year():
+            self._view.dd_anno.options.append(ft.dropdown.Option(anno[0]))
         self._view.update_page()
+
+    def populate_dd_prodotto(self):
+        self._view.dd_brand.options.append(ft.dropdown.Option(key="None", text="Nessun Filtro"))
+        for prodotto in self._model.get_prodotto():
+            self._view.dd_brand.options.append(ft.dropdown.Option(prodotto))
+        self._view.update_page()
+
+    def populate_dd_retailer(self):
+        self._view.dd_retailer.options.append(ft.dropdown.Option(key="None", text="Nessun Filtro"))
+        retailers = self._model.get_retailers()
+        for r in retailers:
+            retailer = r
+            self._view.dd_retailer.options.append(ft.dropdown.Option(key=
+                                                                     retailer.retailer_code,
+                                                                     text=retailer.retailer_name,
+                                                                     data=retailer, on_click=self.read_retailer))
+        self._view.update_page()
+        self._view.update_page()
+
+    def read_retailer(self, e):
+        self._retailer = self._view.dd_retailer.value
