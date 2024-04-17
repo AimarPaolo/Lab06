@@ -5,6 +5,7 @@ class Model:
     def __init__(self):
         self.date_vendite = set()
         self.prodotti = {}
+        self.vendite = []
 
     def get_prodotto(self):
         self.prodotti = prodotto_DAO.get_all_products()
@@ -19,3 +20,7 @@ class Model:
     def get_year(self):
         vendita_DAO.get_date_dao(self.date_vendite)
         return self.date_vendite
+
+    def get_vendita(self):
+        self.vendite = vendita_DAO.get_all_vendite()
+        return self.vendite

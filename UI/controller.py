@@ -9,7 +9,10 @@ class Controller:
         self._model = model
 
     def handle_top_vendite(self, e):
-        pass
+        lista = self._model.get_vendita()
+        sorted(lista, key=lambda x: x.ricavo(), reverse=True)
+        for v in range(9):
+            print(lista[v].ricavo())
 
     def handle_analizza_vendite(self, e):
         pass
@@ -31,8 +34,7 @@ class Controller:
         retailers = self._model.get_retailers()
         for r in retailers:
             retailer = r
-            self._view.dd_retailer.options.append(ft.dropdown.Option(key=
-                                                                     retailer.retailer_code,
+            self._view.dd_retailer.options.append(ft.dropdown.Option(key=retailer.retailer_code,
                                                                      text=retailer.retailer_name,
                                                                      data=retailer, on_click=self.read_retailer))
         self._view.update_page()
