@@ -9,10 +9,19 @@ class Controller:
         self._model = model
 
     def handle_top_vendite(self, e):
-        lista = self._model.get_vendita()
-        sorted(lista, key=lambda x: x.ricavo(), reverse=True)
-        for v in range(9):
-            print(lista[v].ricavo())
+        self._view.controls.clear()
+        anno = self._view.dd_anno.value
+        brand = self._view.dd_brand.value
+        retailer = self._view.dd_retailer.value
+        lista = self._model.get_vendita(anno, retailer, brand)
+        if len(lista) == 0:
+            self._view.txt_result.controls.append(ft.Text(f"La ricerca non ha riportato alcun risultato", color="red"))
+            self._view.update_page()
+            return
+        for vendita in lista:
+            self._view.txt_result.controls.append(ft.Text(f"{vendita}"))
+        self._view.update_page()
+
 
     def handle_analizza_vendite(self, e):
         pass

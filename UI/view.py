@@ -14,6 +14,7 @@ class View(ft.UserControl):
         # graphical elements
         self._title = None
         self.txt_name = None
+        self.txt_result = None
         self.btn_top_vendite = None
         self.btn_analizza_vendite = None
         self.dd_retailer = None
