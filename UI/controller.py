@@ -9,7 +9,7 @@ class Controller:
         self._model = model
 
     def handle_top_vendite(self, e):
-        self._view.controls.clear()
+        self._view.txt_result.controls.clear()
         anno = self._view.dd_anno.value
         brand = self._view.dd_brand.value
         retailer = self._view.dd_retailer.value
@@ -24,7 +24,22 @@ class Controller:
 
 
     def handle_analizza_vendite(self, e):
-        pass
+        self._view.txt_result.controls.clear()
+        anno = self._view.dd_anno.value
+        brand = self._view.dd_brand.value
+        retailer = self._view.dd_retailer.value
+        vendite = self._model.get_vendite_for_analisi(anno, retailer, brand)
+        if len(vendite) == 0:
+            self._view.txt_result.controls.append(ft.Text(f"La ricerca non ha riportato alcun risultato", color="red"))
+            self._view.update_page()
+            return
+        giro_affari = self._model.giro_affari()
+        numero_vendite = self._model.get_numero_vendite()
+        numero_retailers = self._model.get_numero_retailer()
+        numero_prodotti = self._model.get_numero_prodotti()
+        self._view.txt_result.controls.append(ft.Text(f"Statistiche vendite:\nGiro d'affari: {giro_affari}\nNumero vendite: {numero_vendite}"
+                                                      f"\nNumero retailers: {numero_retailers}\nNumero prodotti: {numero_prodotti}"))
+        self._view.update_page()
 
     def populate_dd_anno(self):
         self._view.dd_anno.options.append(ft.dropdown.Option(key="None", text="Nessun Filtro"))
